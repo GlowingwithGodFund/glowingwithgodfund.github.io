@@ -88,8 +88,12 @@ function getSheet_() {
 function ensureHeaders_(sheet) {
   const firstRowValues = sheet.getRange(1, 1, 1, HEADERS.length).getValues()[0];
   const headerMatches = HEADERS.every((header, index) => firstRowValues[index] === header);
+  const firstRowIsBlank = firstRowValues.every((value) => value === '');
 
   if (!headerMatches) {
+    if (!firstRowIsBlank) {
+      sheet.insertRowBefore(1);
+    }
     sheet.getRange(1, 1, 1, HEADERS.length).setValues([HEADERS]);
     sheet.setFrozenRows(1);
   }
