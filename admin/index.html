@@ -41,32 +41,8 @@
 
       <section class="status-panel" data-status role="status" aria-live="polite"></section>
 
-      <section class="review-layout" data-review hidden>
-        <aside class="application-list">
-          <div class="list-tools">
-            <label>
-              <span>Search applications</span>
-              <input type="search" data-search placeholder="Name, email, phone, status" />
-            </label>
-          </div>
-          <div class="list" data-list></div>
-        </aside>
-
-        <article class="application-detail" data-detail>
-          <div class="empty-state">
-            <h2>Select an application</h2>
-            <p>Applicant details and private upload links will appear here.</p>
-          </div>
-        </article>
-      </section>
+      <section data-review hidden></section>
     </main>
-
-    <template id="application-card-template">
-      <button class="application-card" type="button">
-        <span class="card-name"></span>
-        <span class="card-meta"></span>
-      </button>
-    </template>
 
     <script src="admin-config.js"></script>
     <script src="admin.js"></script>

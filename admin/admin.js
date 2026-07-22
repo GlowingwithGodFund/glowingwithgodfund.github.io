@@ -13,10 +13,9 @@
     setup: document.querySelector("[data-setup]"),
     status: document.querySelector("[data-status]"),
     review: document.querySelector("[data-review]"),
-    list: document.querySelector("[data-list]"),
-    detail: document.querySelector("[data-detail]"),
-    search: document.querySelector("[data-search]"),
-    cardTemplate: document.querySelector("#application-card-template"),
+    list: null,
+    detail: null,
+    search: null,
   };
 
   let applications = [];
@@ -116,6 +115,7 @@
 
   function signOut() {
     clearSession();
+    destroyReviewShell();
     const params = new URLSearchParams({
       client_id: config.clientId,
       logout_uri: config.logoutUri,
@@ -173,10 +173,17 @@
   }
 
   function renderList() {
+    if (!elements.list || !elements.search) return;
     elements.list.textContent = "";
     for (const app of filteredApplications()) {
-      const node = elements.cardTemplate.content.firstElementChild.cloneNode(true);
+      const node = document.createElement("button");
+      node.className = "application-card";
+      node.type = "button";
       node.dataset.selected = String(app.submission_id === selectedSubmissionId);
+      node.innerHTML = `
+        <span class="card-name"></span>
+        <span class="card-meta"></span>
+      `;
       node.querySelector(".card-name").textContent = field(app.full_name, "Unnamed applicant");
       node.querySelector(".card-meta").textContent = `${formatDate(app.submitted_at)} · ${field(app.email)}`;
       node.addEventListener("click", () => {
@@ -188,6 +195,7 @@
   }
 
   function renderDetail() {
+    if (!elements.detail) return;
     const app = applications.find((item) => item.submission_id === selectedSubmissionId);
     if (!app) {
       elements.detail.innerHTML =
@@ -271,8 +279,48 @@
   }
 
   function render() {
+    ensureReviewShell();
     renderList();
     renderDetail();
+  }
+
+  function ensureReviewShell() {
+    if (elements.list && elements.detail && elements.search) return;
+
+    elements.review.className = "review-layout";
+    elements.review.innerHTML = `
+      <aside class="application-list">
+        <div class="list-tools">
+          <label>
+            <span>Search applications</span>
+            <input type="search" data-search placeholder="Name, email, phone, status" />
+          </label>
+        </div>
+        <div class="list" data-list></div>
+      </aside>
+
+      <article class="application-detail" data-detail>
+        <div class="empty-state">
+          <h2>Select an application</h2>
+          <p>Applicant details and private upload links will appear here.</p>
+        </div>
+      </article>
+    `;
+    elements.list = elements.review.querySelector("[data-list]");
+    elements.detail = elements.review.querySelector("[data-detail]");
+    elements.search = elements.review.querySelector("[data-search]");
+    elements.search.addEventListener("input", renderList);
+  }
+
+  function destroyReviewShell() {
+    applications = [];
+    selectedSubmissionId = null;
+    elements.review.hidden = true;
+    elements.review.className = "";
+    elements.review.textContent = "";
+    elements.list = null;
+    elements.detail = null;
+    elements.search = null;
   }
 
   async function boot() {
@@ -301,8 +349,10 @@
     elements.review.hidden = !signedIn;
 
     if (signedIn) {
+      ensureReviewShell();
       await loadApplications();
     } else {
+      destroyReviewShell();
       setStatus("Sign in to review applications.");
     }
   }
@@ -310,7 +360,5 @@
   elements.login.addEventListener("click", () => signIn().catch((error) => setStatus(error.message, "error")));
   elements.logout.addEventListener("click", signOut);
   elements.refresh.addEventListener("click", () => loadApplications().catch((error) => setStatus(error.message, "error")));
-  elements.search.addEventListener("input", renderList);
-
   boot().catch((error) => setStatus(error.message, "error"));
 })();
