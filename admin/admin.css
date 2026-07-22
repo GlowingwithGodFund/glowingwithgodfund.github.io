@@ -340,6 +340,19 @@ dd {
   text-decoration: none;
 }
 
+.document-uploads {
+  display: grid;
+  gap: 10px;
+  margin-top: 16px;
+}
+
+.document-uploads h4 {
+  margin: 0;
+  font-size: 0.82rem;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
 .upload-link span {
   font-weight: 700;
 }
@@ -347,6 +360,13 @@ dd {
 .upload-link small {
   color: var(--muted);
   overflow-wrap: anywhere;
+}
+
+.upload-link em {
+  color: var(--rose-deep);
+  font-size: 0.8rem;
+  font-style: normal;
+  font-weight: 700;
 }
 
 .empty-state {

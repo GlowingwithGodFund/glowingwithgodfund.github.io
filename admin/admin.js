@@ -245,6 +245,7 @@
       <section class="uploads">
         <h3>Uploads</h3>
         ${renderImageGallery(imageUploads)}
+        ${documentUploads.length ? '<div class="document-uploads"><h4>Documents</h4>' : ""}
         ${
           documentUploads.length
             ? documentUploads
@@ -252,7 +253,8 @@
                   (upload) => `
             <a class="upload-link" href="${upload.signed_url}" target="_blank" rel="noopener">
               <span>${field(upload.label || upload.field_name, "Upload")}</span>
-              <small>${field(upload.filename || upload.object_key, "Open file")}</small>
+              <small>${field(upload.filename || upload.object_key, "Open or download file")}</small>
+              <em>Open or download</em>
             </a>
           `,
                 )
@@ -261,6 +263,7 @@
               ? ""
               : "<p>No uploads listed for this application.</p>"
         }
+        ${documentUploads.length ? "</div>" : ""}
       </section>
     `;
     attachGalleryEvents(imageUploads);
