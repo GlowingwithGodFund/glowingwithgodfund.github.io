@@ -32,7 +32,7 @@ function doPost(e) {
   try {
     const payload = JSON.parse(e.postData.contents);
     const sheet = getSheet_();
-    sheet.appendRow([
+    const row = [
       payload.submitted_at || new Date().toISOString(),
       payload.submission_id || '',
       value_(payload, 'applicant.full_name'),
@@ -58,10 +58,39 @@ function doPost(e) {
       value_(payload, 'acknowledgments.signature_date'),
       uploadLinks_(payload.uploads),
       JSON.stringify(payload),
-    ]);
+    ];
+    sheet.appendRow(row);
+    const appendedRow = sheet.getLastRow();
 
     return ContentService
-      .createTextOutput(JSON.stringify({ status: 'ok' }))
+      .createTextOutput(JSON.stringify({
+        status: 'ok',
+        spreadsheet_id: sheet.getParent().getId(),
+        spreadsheet_url: sheet.getParent().getUrl(),
+        sheet_name: sheet.getName(),
+        appended_row: appendedRow,
+        last_full_name: value_(payload, 'applicant.full_name'),
+      }))
+      .setMimeType(ContentService.MimeType.JSON);
+  } catch (error) {
+    return ContentService
+      .createTextOutput(JSON.stringify({ status: 'error', message: String(error) }))
+      .setMimeType(ContentService.MimeType.JSON);
+  }
+}
+
+function doGet() {
+  try {
+    const sheet = getSheet_();
+    return ContentService
+      .createTextOutput(JSON.stringify({
+        status: 'ok',
+        spreadsheet_id: sheet.getParent().getId(),
+        spreadsheet_url: sheet.getParent().getUrl(),
+        sheet_name: sheet.getName(),
+        last_row: sheet.getLastRow(),
+        headers: sheet.getRange(1, 1, 1, HEADERS.length).getValues()[0],
+      }))
       .setMimeType(ContentService.MimeType.JSON);
   } catch (error) {
     return ContentService
