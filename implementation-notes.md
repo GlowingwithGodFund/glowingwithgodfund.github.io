@@ -31,6 +31,12 @@ The production site is static. The form uploads files directly to the configured
 
 CORS is not security. If the upload prefix is public-write, keep it isolated from the rest of the bucket and avoid public-read access for applicant documents.
 
+## Admin Portal
+
+The proposed admin portal should be protected by Cognito and a Lambda/API Gateway backend. The static page should only contain public Cognito/API identifiers, never AWS access keys or hardcoded shared passwords.
+
+The first admin version reads the Google Sheet CSV export and signs S3 object links server-side. This preserves the current intake form but depends on the Sheet remaining viewable by link. Long-term, move applicant records into AWS storage or use Google service-account access so the Sheet can be private.
+
 ## Production Next Steps
 
 1. Confirm the S3 public upload policy in `aws/s3-public-put-policy.json` is applied to `glowingwithgodfund-applications`.
@@ -40,6 +46,7 @@ CORS is not security. If the upload prefix is public-write, keep it isolated fro
 5. Configure the S3 bucket/prefix with CORS for the nonprofit domain, server-side encryption, and lifecycle/retention policy.
 6. Add CAPTCHA or bot protection if spam becomes an issue.
 7. Run a full applicant test before launch.
+8. Deploy the Cognito/API Gateway/Lambda admin stack if Regina needs an in-site review portal.
 
 ## Legal And Compliance Notes
 

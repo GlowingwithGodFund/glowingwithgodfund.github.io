@@ -1,2 +1,7 @@
 .DS_Store
-node_modules/
+.venv/
+backend/.env
+data/submissions.csv
+admin-config.js
+__pycache__/
+*.pyc

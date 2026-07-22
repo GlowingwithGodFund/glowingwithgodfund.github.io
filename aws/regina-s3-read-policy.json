@@ -1,0 +1,39 @@
+{
+  "Version": "2012-10-17",
+  "Statement": [
+    {
+      "Sid": "ListApplicationsPrefix",
+      "Effect": "Allow",
+      "Action": [
+        "s3:ListBucket",
+        "s3:GetBucketLocation"
+      ],
+      "Resource": "arn:aws:s3:::glowingwithgodfund-applications",
+      "Condition": {
+        "StringLike": {
+          "s3:prefix": [
+            "",
+            "applications",
+            "applications/*"
+          ]
+        }
+      }
+    },
+    {
+      "Sid": "ReadApplicationUploads",
+      "Effect": "Allow",
+      "Action": [
+        "s3:GetObject"
+      ],
+      "Resource": "arn:aws:s3:::glowingwithgodfund-applications/applications/*"
+    },
+    {
+      "Sid": "UseS3Console",
+      "Effect": "Allow",
+      "Action": [
+        "s3:ListAllMyBuckets"
+      ],
+      "Resource": "*"
+    }
+  ]
+}

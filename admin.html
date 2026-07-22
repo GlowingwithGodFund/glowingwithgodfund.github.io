@@ -1,0 +1,74 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Admin | Glowing With God Fund</title>
+    <meta name="robots" content="noindex, nofollow" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@500;600;700&family=Inter:wght@400;500;600;700&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="admin.css" />
+  </head>
+  <body>
+    <main class="admin-shell">
+      <section class="admin-hero">
+        <div>
+          <p class="eyebrow">Private Review</p>
+          <h1>Applications</h1>
+          <p>
+            Review submitted Crown Winner Program applications and open short-lived private upload
+            links after signing in.
+          </p>
+        </div>
+        <div class="admin-actions">
+          <button class="button primary" type="button" data-login>Sign In</button>
+          <button class="button secondary" type="button" data-refresh hidden>Refresh</button>
+          <button class="button secondary" type="button" data-logout hidden>Sign Out</button>
+        </div>
+      </section>
+
+      <section class="setup-panel" data-setup hidden>
+        <h2>Admin setup required</h2>
+        <p>
+          Add the deployed Cognito and API values to <code>admin-config.js</code> before using this
+          page.
+        </p>
+      </section>
+
+      <section class="status-panel" data-status role="status" aria-live="polite"></section>
+
+      <section class="review-layout" data-review hidden>
+        <aside class="application-list">
+          <div class="list-tools">
+            <label>
+              <span>Search applications</span>
+              <input type="search" data-search placeholder="Name, email, phone, status" />
+            </label>
+          </div>
+          <div class="list" data-list></div>
+        </aside>
+
+        <article class="application-detail" data-detail>
+          <div class="empty-state">
+            <h2>Select an application</h2>
+            <p>Applicant details and private upload links will appear here.</p>
+          </div>
+        </article>
+      </section>
+    </main>
+
+    <template id="application-card-template">
+      <button class="application-card" type="button">
+        <span class="card-name"></span>
+        <span class="card-meta"></span>
+      </button>
+    </template>
+
+    <script src="admin-config.js"></script>
+    <script src="admin.js"></script>
+  </body>
+</html>

@@ -1,0 +1,137 @@
+AWSTemplateFormatVersion: "2010-09-09"
+Transform: AWS::Serverless-2016-10-31
+Description: Glowing With God Fund private admin API and Cognito login.
+
+Parameters:
+  AdminOrigin:
+    Type: String
+    Default: https://glowingwithgodfund.github.io
+  CallbackUrl:
+    Type: String
+    Default: https://glowingwithgodfund.github.io/admin.html
+  LogoutUrl:
+    Type: String
+    Default: https://glowingwithgodfund.github.io/admin.html
+  BucketName:
+    Type: String
+    Default: glowingwithgodfund-applications
+  GoogleSheetCsvUrl:
+    Type: String
+    Default: https://docs.google.com/spreadsheets/d/1KpaJbwJswzd8QXtNfFT9poxR_G-nvLtcuBF22iyImAY/export?format=csv&gid=1485217957
+  CognitoDomainPrefix:
+    Type: String
+    Default: glowingwithgodfund-admin-154808201414
+
+Globals:
+  Function:
+    Runtime: python3.12
+    Timeout: 30
+    MemorySize: 256
+    Architectures:
+      - arm64
+
+Resources:
+  AdminUserPool:
+    Type: AWS::Cognito::UserPool
+    Properties:
+      UserPoolName: glowing-with-god-admin
+      AdminCreateUserConfig:
+        AllowAdminCreateUserOnly: true
+      AutoVerifiedAttributes:
+        - email
+      UsernameAttributes:
+        - email
+      Policies:
+        PasswordPolicy:
+          MinimumLength: 12
+          RequireLowercase: true
+          RequireNumbers: true
+          RequireSymbols: false
+          RequireUppercase: true
+
+  AdminUserPoolClient:
+    Type: AWS::Cognito::UserPoolClient
+    Properties:
+      ClientName: glowing-with-god-admin-web
+      UserPoolId: !Ref AdminUserPool
+      GenerateSecret: false
+      CallbackURLs:
+        - !Ref CallbackUrl
+      LogoutURLs:
+        - !Ref LogoutUrl
+      AllowedOAuthFlowsUserPoolClient: true
+      AllowedOAuthFlows:
+        - code
+      AllowedOAuthScopes:
+        - email
+        - openid
+        - profile
+      SupportedIdentityProviders:
+        - COGNITO
+      ExplicitAuthFlows:
+        - ALLOW_REFRESH_TOKEN_AUTH
+        - ALLOW_USER_SRP_AUTH
+
+  AdminUserPoolDomain:
+    Type: AWS::Cognito::UserPoolDomain
+    Properties:
+      Domain: !Ref CognitoDomainPrefix
+      UserPoolId: !Ref AdminUserPool
+
+  AdminApi:
+    Type: AWS::Serverless::HttpApi
+    Properties:
+      CorsConfiguration:
+        AllowOrigins:
+          - !Ref AdminOrigin
+        AllowHeaders:
+          - authorization
+          - content-type
+        AllowMethods:
+          - GET
+          - OPTIONS
+      Auth:
+        Authorizers:
+          CognitoAuthorizer:
+            IdentitySource: "$request.header.Authorization"
+            JwtConfiguration:
+              issuer: !Sub https://cognito-idp.${AWS::Region}.amazonaws.com/${AdminUserPool}
+              audience:
+                - !Ref AdminUserPoolClient
+        DefaultAuthorizer: CognitoAuthorizer
+
+  AdminApiFunction:
+    Type: AWS::Serverless::Function
+    Properties:
+      FunctionName: glowing-with-god-admin-api
+      CodeUri: admin-lambda/
+      Handler: app.handler
+      Environment:
+        Variables:
+          BUCKET_NAME: !Ref BucketName
+          GOOGLE_SHEET_CSV_URL: !Ref GoogleSheetCsvUrl
+          SIGNED_URL_EXPIRES_SECONDS: "900"
+      Policies:
+        - AWSLambdaBasicExecutionRole
+        - Statement:
+            Effect: Allow
+            Action:
+              - s3:GetObject
+            Resource: !Sub arn:aws:s3:::${BucketName}/applications/*
+      Events:
+        ListApplications:
+          Type: HttpApi
+          Properties:
+            ApiId: !Ref AdminApi
+            Path: /applications
+            Method: GET
+
+Outputs:
+  AdminApiUrl:
+    Value: !Sub https://${AdminApi}.execute-api.${AWS::Region}.amazonaws.com
+  CognitoDomain:
+    Value: !Sub https://${CognitoDomainPrefix}.auth.${AWS::Region}.amazoncognito.com
+  CognitoUserPoolId:
+    Value: !Ref AdminUserPool
+  CognitoUserPoolClientId:
+    Value: !Ref AdminUserPoolClient

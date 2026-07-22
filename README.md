@@ -7,8 +7,10 @@ Static GitHub Pages site for the Glowing With God Fund Crown Winner Program.
 - `index.html` - public site and application form
 - `styles.css` - responsive site styling
 - `script.js` - mobile nav, upload labels, S3 uploads, Google Sheets submission
+- `admin.html`, `admin.css`, `admin.js` - private reviewer portal shell
 - `assets/glowing-with-god-logo-transparent.png` - site logo
 - `google-apps-script/Code.gs` - starter Google Apps Script for writing submissions to a Google Sheet
+- `aws/admin-template.yaml` - Cognito/API/Lambda admin portal infrastructure
 
 Local preview PDFs and earlier server experiments are not part of the production site.
 
@@ -75,6 +77,14 @@ The bucket was created in `us-west-1`, CORS was applied for `https://glowingwith
 The intended public-write upload policy is in `aws/s3-public-put-policy.json`.
 
 Important: CORS is not access control. If the bucket/prefix allows public writes, another client can still attempt writes even if CORS blocks normal browser reads from other origins. Keep the upload prefix isolated, monitor it, and avoid public read access for applicant documents.
+
+## Admin Portal
+
+`admin.html` is designed to work with Cognito and the protected admin API defined in `aws/admin-template.yaml`.
+
+Deployment notes are in `aws/admin-deployment.md`.
+
+The admin portal is not secured until Cognito, API Gateway, Lambda, and `admin-config.js` are deployed/configured. Do not put AWS keys, Google API keys, or hardcoded passwords in static JavaScript.
 
 ## Source Mapping
 
