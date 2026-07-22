@@ -6,7 +6,7 @@ This admin portal keeps the public website static while adding a private review 
 - API Gateway verifies the Cognito token.
 - Lambda reads the `Applications` Google Sheet tab.
 - Lambda generates short-lived S3 signed links for uploads.
-- `admin.html` displays submissions in a reviewer-friendly layout.
+- `admin/index.html` displays submissions in a reviewer-friendly layout.
 
 ## Current Data Source
 
@@ -36,8 +36,8 @@ sam deploy --guided --stack-name glowing-with-god-admin --region us-west-1
 Use these guided values:
 
 - `AdminOrigin`: `https://glowingwithgodfund.github.io`
-- `CallbackUrl`: `https://glowingwithgodfund.github.io/admin.html`
-- `LogoutUrl`: `https://glowingwithgodfund.github.io/admin.html`
+- `CallbackUrl`: `https://glowingwithgodfund.github.io/admin/`
+- `LogoutUrl`: `https://glowingwithgodfund.github.io/admin/`
 - `BucketName`: `glowingwithgodfund-applications`
 - `GoogleSheetCsvUrl`: the CSV export URL above
 - `CognitoDomainPrefix`: globally unique lowercase value, for example `glowingwithgodfund-admin-154808201414`
@@ -50,19 +50,19 @@ After deploy, copy these outputs:
 
 ## Configure The Static Admin Page
 
-Create `admin-config.js` from `admin-config.example.js`:
+Create `admin/admin-config.js` from `admin/admin-config.example.js`:
 
 ```js
 window.GWG_ADMIN_CONFIG = {
   apiBaseUrl: "AdminApiUrl output",
   cognitoDomain: "CognitoDomain output",
   clientId: "CognitoUserPoolClientId output",
-  redirectUri: "https://glowingwithgodfund.github.io/admin.html",
-  logoutUri: "https://glowingwithgodfund.github.io/admin.html",
+  redirectUri: "https://glowingwithgodfund.github.io/admin/",
+  logoutUri: "https://glowingwithgodfund.github.io/admin/",
 };
 ```
 
-Commit and push `admin-config.js` after the stack exists. These values are not secrets; the API is protected by Cognito.
+Commit and push `admin/admin-config.js` after the stack exists. These values are not secrets; the API is protected by Cognito.
 
 ## Add Reviewers
 
@@ -79,7 +79,7 @@ Reviewers do not need AWS IAM console access for the admin portal.
 ## Reviewer URL
 
 ```text
-https://glowingwithgodfund.github.io/admin.html
+https://glowingwithgodfund.github.io/admin/
 ```
 
 ## Later Hardening

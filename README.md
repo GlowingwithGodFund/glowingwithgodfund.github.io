@@ -7,7 +7,7 @@ Static GitHub Pages site for the Glowing With God Fund Crown Winner Program.
 - `index.html` - public site and application form
 - `styles.css` - responsive site styling
 - `script.js` - mobile nav, upload labels, S3 uploads, Google Sheets submission
-- `admin.html`, `admin.css`, `admin.js` - private reviewer portal shell
+- `admin/` - private reviewer portal shell
 - `assets/glowing-with-god-logo-transparent.png` - site logo
 - `google-apps-script/Code.gs` - starter Google Apps Script for writing submissions to a Google Sheet
 - `aws/admin-template.yaml` - Cognito/API/Lambda admin portal infrastructure
@@ -80,7 +80,7 @@ Important: CORS is not access control. If the bucket/prefix allows public writes
 
 ## Admin Portal
 
-`admin.html` is designed to work with Cognito and the protected admin API defined in `aws/admin-template.yaml`.
+`admin/` is designed to work with Cognito and the protected admin API defined in `aws/admin-template.yaml`.
 
 Deployment notes are in `aws/admin-deployment.md`.
 

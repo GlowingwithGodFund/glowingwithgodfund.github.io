@@ -3,5 +3,6 @@
 backend/.env
 data/submissions.csv
 admin-config.js
+admin/admin-config.js
 __pycache__/
 *.pyc

@@ -8,10 +8,10 @@ Parameters:
     Default: https://glowingwithgodfund.github.io
   CallbackUrl:
     Type: String
-    Default: https://glowingwithgodfund.github.io/admin.html
+    Default: https://glowingwithgodfund.github.io/admin/
   LogoutUrl:
     Type: String
-    Default: https://glowingwithgodfund.github.io/admin.html
+    Default: https://glowingwithgodfund.github.io/admin/
   BucketName:
     Type: String
     Default: glowingwithgodfund-applications
