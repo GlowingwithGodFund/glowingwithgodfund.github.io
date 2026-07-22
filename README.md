@@ -30,7 +30,7 @@ data-s3-upload-base-url="https://glowingwithgodfund-applications.s3.us-west-1.am
 Current Google Apps Script endpoint:
 
 ```html
-data-google-sheets-endpoint="https://script.google.com/macros/s/AKfycbxCBGn1IDgrvnoCmrxVELpJODZOUtikKMqw_ncCc3iwYHxm-KV1kIiJFNYVpX8Do4hw/exec"
+data-google-sheets-endpoint="https://script.google.com/macros/s/AKfycbyx9nHBcEZQbPe9sVG1WQM5HT2CQwHt3EZYRofTRQAEnejsoUFSyHYkP29ZvS10RcwA/exec"
 ```
 
 Set this if the Apps Script deployment changes:
