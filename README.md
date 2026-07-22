@@ -47,8 +47,11 @@ Use `google-apps-script/Code.gs` as the starter script:
 2. Open Extensions -> Apps Script.
 3. Paste `google-apps-script/Code.gs`.
 4. Set `SHEET_NAME` if needed.
-5. Deploy as a Web App.
-6. Use the Web App URL as `data-google-sheets-endpoint`.
+5. Run `setupHeaders` once from the Apps Script editor to write the first-row headers.
+6. Deploy as a Web App.
+7. Use the Web App URL as `data-google-sheets-endpoint`.
+
+When redeploying, create a new web app version so the `/exec` URL uses the latest code.
 
 ## S3 Uploads
 

@@ -34,7 +34,7 @@ CORS is not security. If the upload prefix is public-write, keep it isolated fro
 ## Production Next Steps
 
 1. Confirm the S3 public upload policy in `aws/s3-public-put-policy.json` is applied to `glowingwithgodfund-applications`.
-2. Confirm the Google Apps Script web app is deployed with access set to anyone.
+2. Paste the latest `google-apps-script/Code.gs`, run `setupHeaders`, and redeploy the Google Apps Script web app with access set to anyone.
 3. Replace the Nucleus link with the final giving URL.
 4. Confirm the public contact email and phone number.
 5. Configure the S3 bucket/prefix with CORS for the nonprofit domain, server-side encryption, and lifecycle/retention policy.

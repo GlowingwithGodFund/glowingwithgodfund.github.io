@@ -1,10 +1,34 @@
 const SPREADSHEET_ID = '1KpaJbwJswzd8QXtNfFT9poxR_G-nvLtcuBF22iyImAY';
 const SHEET_NAME = 'Applications';
+const HEADERS = [
+  'Submitted At',
+  'Submission ID',
+  'Full Name',
+  'Date of Birth',
+  'Phone',
+  'Email',
+  'Address',
+  'City',
+  'State',
+  'Zip',
+  'Referral Sources',
+  'Specific Reference',
+  'Hair Loss Conditions',
+  'Condition Details',
+  'Estimated Start',
+  'Impact',
+  'Financial Hardship',
+  'Financial Explanation',
+  'Supporting Documents',
+  'Supporting Documents List',
+  'Initials',
+  'Signature',
+  'Signature Date',
+  'Uploads',
+  'Raw Payload',
+];
 
 function doPost(e) {
-  const lock = LockService.getScriptLock();
-  lock.waitLock(30000);
-
   try {
     const payload = JSON.parse(e.postData.contents);
     const sheet = getSheet_();
@@ -43,9 +67,12 @@ function doPost(e) {
     return ContentService
       .createTextOutput(JSON.stringify({ status: 'error', message: String(error) }))
       .setMimeType(ContentService.MimeType.JSON);
-  } finally {
-    lock.releaseLock();
   }
+}
+
+function setupHeaders() {
+  const sheet = getSheet_();
+  ensureHeaders_(sheet);
 }
 
 function getSheet_() {
@@ -54,36 +81,18 @@ function getSheet_() {
   if (!sheet) {
     sheet = spreadsheet.insertSheet(SHEET_NAME);
   }
-  if (sheet.getLastRow() === 0) {
-    sheet.appendRow([
-      'Submitted At',
-      'Submission ID',
-      'Full Name',
-      'Date of Birth',
-      'Phone',
-      'Email',
-      'Address',
-      'City',
-      'State',
-      'Zip',
-      'Referral Sources',
-      'Specific Reference',
-      'Hair Loss Conditions',
-      'Condition Details',
-      'Estimated Start',
-      'Impact',
-      'Financial Hardship',
-      'Financial Explanation',
-      'Supporting Documents',
-      'Supporting Documents List',
-      'Initials',
-      'Signature',
-      'Signature Date',
-      'Uploads',
-      'Raw Payload',
-    ]);
-  }
+  ensureHeaders_(sheet);
   return sheet;
+}
+
+function ensureHeaders_(sheet) {
+  const firstRowValues = sheet.getRange(1, 1, 1, HEADERS.length).getValues()[0];
+  const headerMatches = HEADERS.every((header, index) => firstRowValues[index] === header);
+
+  if (!headerMatches) {
+    sheet.getRange(1, 1, 1, HEADERS.length).setValues([HEADERS]);
+    sheet.setFrozenRows(1);
+  }
 }
 
 function value_(payload, path) {
