@@ -10,7 +10,7 @@ Static GitHub Pages site for the Glowing With God Fund Crown Winner Program.
 - `assets/glowing-with-god-logo-transparent.png` - site logo
 - `google-apps-script/Code.gs` - starter Google Apps Script for writing submissions to a Google Sheet
 
-Local preview PDFs and backend experiments are not required for production.
+Local preview PDFs and earlier server experiments are not part of the production site.
 
 ## Form Configuration
 
@@ -69,7 +69,7 @@ glowingwithgodfund-applications
 
 The bucket was created in `us-west-1`, CORS was applied for `https://glowingwithgodfund.github.io`, and default AES-256 server-side encryption was enabled.
 
-The public upload policy still needs AWS Console/admin permission because account-level or bucket-level Block Public Access prevented applying a public bucket policy from the current IAM user. The intended policy is in `aws/s3-public-put-policy.json`.
+The intended public-write upload policy is in `aws/s3-public-put-policy.json`.
 
 Important: CORS is not access control. If the bucket/prefix allows public writes, another client can still attempt writes even if CORS blocks normal browser reads from other origins. Keep the upload prefix isolated, monitor it, and avoid public read access for applicant documents.
 

@@ -14,7 +14,7 @@ The detailed applicant terms are still public and accessible, but they are inten
 
 ## Application-Flow-Only Content
 
-Keep these in the form and backend workflow:
+Keep these in the application flow:
 
 - Hair/scalp photo uploads
 - Financial hardship explanation
@@ -34,11 +34,10 @@ CORS is not security. If the upload prefix is public-write, keep it isolated fro
 ## Production Next Steps
 
 1. Confirm the S3 public upload policy in `aws/s3-public-put-policy.json` is applied to `glowingwithgodfund-applications`.
-2. Replace `data-google-sheets-endpoint` on the form in `index.html` with the deployed Google Apps Script web app URL.
-2. Replace the Nucleus link with the final giving URL.
-3. Confirm the public contact email and phone number.
-4. Configure the S3 bucket/prefix with CORS for the nonprofit domain, server-side encryption, and lifecycle/retention policy.
-5. Deploy the Apps Script attached to the shared Google Sheet.
+2. Confirm the Google Apps Script web app is deployed with access set to anyone.
+3. Replace the Nucleus link with the final giving URL.
+4. Confirm the public contact email and phone number.
+5. Configure the S3 bucket/prefix with CORS for the nonprofit domain, server-side encryption, and lifecycle/retention policy.
 6. Add CAPTCHA or bot protection if spam becomes an issue.
 7. Run a full applicant test before launch.
 
