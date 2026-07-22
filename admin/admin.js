@@ -204,6 +204,8 @@
     }
 
     const uploads = Array.isArray(app.uploads) ? app.uploads : [];
+    const imageUploads = uploads.filter(isImageUpload);
+    const documentUploads = uploads.filter((upload) => !isImageUpload(upload));
     elements.detail.innerHTML = `
       <header class="detail-header">
         <div>
@@ -242,9 +244,10 @@
 
       <section class="uploads">
         <h3>Uploads</h3>
+        ${renderImageGallery(imageUploads)}
         ${
-          uploads.length
-            ? uploads
+          documentUploads.length
+            ? documentUploads
                 .map(
                   (upload) => `
             <a class="upload-link" href="${upload.signed_url}" target="_blank" rel="noopener">
@@ -254,10 +257,13 @@
           `,
                 )
                 .join("")
-            : "<p>No uploads listed for this application.</p>"
+            : imageUploads.length
+              ? ""
+              : "<p>No uploads listed for this application.</p>"
         }
       </section>
     `;
+    attachGalleryEvents(imageUploads);
   }
 
   function infoBlock(title, rows) {
@@ -276,6 +282,61 @@
           .join("")}
       </section>
     `;
+  }
+
+  function isImageUpload(upload) {
+    return /\.(avif|gif|jpe?g|png|webp)$/i.test(upload.filename || upload.object_key || "");
+  }
+
+  function renderImageGallery(imageUploads) {
+    if (!imageUploads.length) return "";
+    const first = imageUploads[0];
+    return `
+      <div class="image-gallery" data-gallery>
+        <a class="gallery-main-link" href="${first.signed_url}" target="_blank" rel="noopener" data-gallery-link>
+          <img class="gallery-main-image" src="${first.signed_url}" alt="${field(first.label, "Application upload")}" data-gallery-image />
+        </a>
+        <div class="gallery-caption" data-gallery-caption>
+          <strong>${field(first.label, "Image Upload")}</strong>
+          <span>${field(first.filename)}</span>
+        </div>
+        <div class="gallery-thumbs" aria-label="Image uploads">
+          ${imageUploads
+            .map(
+              (upload, index) => `
+            <button class="gallery-thumb" type="button" data-image-index="${index}" data-selected="${index === 0}">
+              <img src="${upload.signed_url}" alt="${field(upload.label, "Application upload")}" />
+              <span>${field(upload.label, "Image")}</span>
+            </button>
+          `,
+            )
+            .join("")}
+        </div>
+      </div>
+    `;
+  }
+
+  function attachGalleryEvents(imageUploads) {
+    const gallery = elements.detail.querySelector("[data-gallery]");
+    if (!gallery) return;
+
+    const image = gallery.querySelector("[data-gallery-image]");
+    const link = gallery.querySelector("[data-gallery-link]");
+    const caption = gallery.querySelector("[data-gallery-caption]");
+    gallery.querySelectorAll("[data-image-index]").forEach((button) => {
+      button.addEventListener("click", () => {
+        const upload = imageUploads[Number(button.dataset.imageIndex)];
+        if (!upload) return;
+
+        image.src = upload.signed_url;
+        image.alt = field(upload.label, "Application upload");
+        link.href = upload.signed_url;
+        caption.innerHTML = `<strong>${field(upload.label, "Image Upload")}</strong><span>${field(upload.filename)}</span>`;
+        gallery
+          .querySelectorAll("[data-image-index]")
+          .forEach((thumb) => (thumb.dataset.selected = String(thumb === button)));
+      });
+    });
   }
 
   function render() {

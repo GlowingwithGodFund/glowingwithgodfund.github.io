@@ -262,6 +262,73 @@ dd {
   padding: 18px;
 }
 
+.image-gallery {
+  display: grid;
+  gap: 14px;
+  margin-bottom: 18px;
+}
+
+.gallery-main-link {
+  display: block;
+  overflow: hidden;
+  border: 1px solid var(--line);
+  background: #f4eee9;
+}
+
+.gallery-main-image {
+  display: block;
+  width: 100%;
+  max-height: 540px;
+  object-fit: contain;
+}
+
+.gallery-caption {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px 14px;
+  align-items: baseline;
+  color: var(--muted);
+  overflow-wrap: anywhere;
+}
+
+.gallery-caption strong {
+  color: var(--ink);
+}
+
+.gallery-thumbs {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(128px, 1fr));
+  gap: 10px;
+}
+
+.gallery-thumb {
+  display: grid;
+  gap: 8px;
+  border: 1px solid var(--line);
+  background: white;
+  padding: 8px;
+  color: var(--ink);
+  text-align: left;
+  cursor: pointer;
+}
+
+.gallery-thumb[data-selected="true"] {
+  border-color: var(--rose-deep);
+  background: #fbf1ee;
+}
+
+.gallery-thumb img {
+  width: 100%;
+  aspect-ratio: 4 / 3;
+  object-fit: cover;
+  background: #f4eee9;
+}
+
+.gallery-thumb span {
+  font-size: 0.78rem;
+  font-weight: 700;
+}
+
 .upload-link {
   display: grid;
   gap: 4px;
