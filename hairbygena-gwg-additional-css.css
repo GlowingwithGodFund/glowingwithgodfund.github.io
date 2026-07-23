@@ -1,34 +1,43 @@
-/* Paste this into WordPress Appearance > Customize > Additional CSS. */
+/* Paste this into WordPress Appearance > Customize > Additional CSS.
+   This is intentionally scoped to the Glowing With God Fund embed and its
+   Elementor wrapper on hairbygena.com so it does not restyle the rest of the site. */
 
-html,
-body {
-  overflow-x: clip;
-}
-
-.wp-block-html:has(.gwg-cta),
-.wp-block-group:has(.gwg-cta),
-.entry-content > .wp-block-html:has(.gwg-cta),
-.entry-content > .wp-block-group:has(.gwg-cta),
-.entry-content > .gwg-cta,
-.wp-site-blocks .wp-block-html:has(.gwg-cta),
-.wp-site-blocks .wp-block-group:has(.gwg-cta) {
-  width: 100vw !important;
-  max-width: 100vw !important;
+.elementor-element-96864af,
+.elementor-element-96864af > .e-con-inner,
+.elementor-element-96864af .elementor-widget-html,
+.elementor-element-96864af .elementor-widget-container {
+  max-width: none !important;
+  min-height: 0 !important;
   margin-top: 0 !important;
-  margin-right: calc(50% - 50vw) !important;
   margin-bottom: 0 !important;
-  margin-left: calc(50% - 50vw) !important;
-  padding: 0 !important;
-  border: 0 !important;
+  padding-top: 0 !important;
+  padding-bottom: 0 !important;
+  border-top: 0 !important;
+  border-bottom: 0 !important;
   background: #111713 !important;
-  box-shadow: none !important;
 }
 
-.wp-block-html:has(.gwg-cta) + *,
-.wp-block-group:has(.gwg-cta) + *,
-* + .wp-block-html:has(.gwg-cta),
-* + .wp-block-group:has(.gwg-cta) {
+.elementor-element-96864af {
   margin-top: 0 !important;
+  margin-bottom: 0 !important;
+  --padding-top: 0 !important;
+  --padding-bottom: 0 !important;
+  --margin-top: 0 !important;
+  --margin-bottom: 0 !important;
+}
+
+.elementor-element-96864af > .e-con-inner {
+  width: 100% !important;
+  padding-left: 0 !important;
+  padding-right: 0 !important;
+}
+
+.elementor-element-96864af .elementor-widget-html {
+  width: 100% !important;
+}
+
+.elementor-element-96864af + .elementor-element-dad4b71 {
+  display: none !important;
 }
 
 .gwg-cta {
@@ -36,15 +45,13 @@ body {
   display: block;
   width: 100vw;
   max-width: 100vw;
-  margin: 0 calc(50% - 50vw) !important;
+  margin: -1px calc(50% - 50vw) !important;
   border: 0 !important;
   background: #111713;
   color: #fbf4ef;
   padding: clamp(48px, 8vw, 96px) 20px;
-  outline: 2px solid #111713;
-  box-shadow:
-    0 -4px 0 #111713,
-    0 4px 0 #111713;
+  outline: 0;
+  box-shadow: none;
 }
 
 .gwg-cta::before,
@@ -54,18 +61,18 @@ body {
   z-index: 0;
   display: block;
   width: 100%;
-  height: 8px;
+  height: 16px;
   background: #111713;
   content: "";
   pointer-events: none;
 }
 
 .gwg-cta::before {
-  top: -4px;
+  top: -16px;
 }
 
 .gwg-cta::after {
-  bottom: -4px;
+  bottom: -16px;
 }
 
 .gwg-cta__inner {
