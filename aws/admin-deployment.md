@@ -35,9 +35,9 @@ sam deploy --guided --stack-name glowing-with-god-admin --region us-west-1
 
 Use these guided values:
 
-- `AdminOrigin`: `https://glowingwithgodfund.github.io`
-- `CallbackUrl`: `https://glowingwithgodfund.github.io/admin/`
-- `LogoutUrl`: `https://glowingwithgodfund.github.io/admin/`
+- `AdminOrigin`: `https://glowingwithgodfund.com`
+- `CallbackUrl`: `https://glowingwithgodfund.com/admin/`
+- `LogoutUrl`: `https://glowingwithgodfund.com/admin/`
 - `BucketName`: `glowingwithgodfund-applications`
 - `GoogleSheetCsvUrl`: the CSV export URL above
 - `CognitoDomainPrefix`: globally unique lowercase value, for example `glowingwithgodfund-admin-154808201414`
@@ -57,8 +57,8 @@ window.GWG_ADMIN_CONFIG = {
   apiBaseUrl: "AdminApiUrl output",
   cognitoDomain: "CognitoDomain output",
   clientId: "CognitoUserPoolClientId output",
-  redirectUri: "https://glowingwithgodfund.github.io/admin/",
-  logoutUri: "https://glowingwithgodfund.github.io/admin/",
+  redirectUri: "https://glowingwithgodfund.com/admin/",
+  logoutUri: "https://glowingwithgodfund.com/admin/",
 };
 ```
 
@@ -79,7 +79,7 @@ Reviewers do not need AWS IAM console access for the admin portal.
 ## Reviewer URL
 
 ```text
-https://glowingwithgodfund.github.io/admin/
+https://glowingwithgodfund.com/admin/
 ```
 
 ## Later Hardening

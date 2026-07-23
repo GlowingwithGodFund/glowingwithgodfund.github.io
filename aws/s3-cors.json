@@ -3,7 +3,11 @@
     {
       "AllowedHeaders": ["*"],
       "AllowedMethods": ["PUT"],
-      "AllowedOrigins": ["https://glowingwithgodfund.github.io"],
+      "AllowedOrigins": [
+        "https://glowingwithgodfund.com",
+        "https://www.glowingwithgodfund.com",
+        "https://glowingwithgodfund.github.io"
+      ],
       "ExposeHeaders": ["ETag"],
       "MaxAgeSeconds": 3000
     }

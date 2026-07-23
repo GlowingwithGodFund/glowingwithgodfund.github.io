@@ -72,7 +72,7 @@ Current bucket:
 glowingwithgodfund-applications
 ```
 
-The bucket was created in `us-west-1`, CORS was applied for `https://glowingwithgodfund.github.io`, and default AES-256 server-side encryption was enabled.
+The bucket was created in `us-west-1`, CORS was applied for `https://glowingwithgodfund.com`, and default AES-256 server-side encryption was enabled.
 
 The intended public-write upload policy is in `aws/s3-public-put-policy.json`.
 

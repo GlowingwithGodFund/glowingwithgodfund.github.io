@@ -5,13 +5,13 @@ Description: Glowing With God Fund private admin API and Cognito login.
 Parameters:
   AdminOrigin:
     Type: String
-    Default: https://glowingwithgodfund.github.io
+    Default: https://glowingwithgodfund.com
   CallbackUrl:
     Type: String
-    Default: https://glowingwithgodfund.github.io/admin/
+    Default: https://glowingwithgodfund.com/admin/
   LogoutUrl:
     Type: String
-    Default: https://glowingwithgodfund.github.io/admin/
+    Default: https://glowingwithgodfund.com/admin/
   BucketName:
     Type: String
     Default: glowingwithgodfund-applications
