@@ -5,8 +5,7 @@
       "AllowedMethods": ["PUT"],
       "AllowedOrigins": [
         "https://glowingwithgodfund.com",
-        "https://www.glowingwithgodfund.com",
-        "https://glowingwithgodfund.github.io"
+        "https://www.glowingwithgodfund.com"
       ],
       "ExposeHeaders": ["ETag"],
       "MaxAgeSeconds": 3000
