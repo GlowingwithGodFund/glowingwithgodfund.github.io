@@ -223,6 +223,18 @@
           ["Referral", app.referral_sources],
           ["Specific reference", app.specific_reference],
         ])}
+        ${infoBlock("Occupation / Work", [
+          ["Occupation or role", app.occupation],
+          ["Business or employer", app.employer_name],
+          [
+            "Business address",
+            [app.employer_address, app.employer_city, app.employer_state, app.employer_zip]
+              .filter(Boolean)
+              .join(", "),
+          ],
+          ["Business phone", app.employer_phone],
+          ["Employment verification initials", app.employment_verification_initials],
+        ])}
         ${infoBlock("Hair Loss", [
           ["Conditions", app.hair_loss_conditions],
           ["Estimated start", app.estimated_start],

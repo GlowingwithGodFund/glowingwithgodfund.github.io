@@ -13,6 +13,14 @@ const HEADERS = [
   'Zip',
   'Referral Sources',
   'Specific Reference',
+  'Occupation',
+  'Employer Name',
+  'Employer Address',
+  'Employer City',
+  'Employer State',
+  'Employer Zip',
+  'Employer Phone',
+  'Employment Verification Initials',
   'Hair Loss Conditions',
   'Condition Details',
   'Estimated Start',
@@ -45,6 +53,14 @@ function doPost(e) {
       value_(payload, 'applicant.zip'),
       list_(payload.referral && payload.referral.sources),
       value_(payload, 'referral.specific_reference'),
+      value_(payload, 'employment.occupation'),
+      value_(payload, 'employment.employer_name'),
+      value_(payload, 'employment.employer_address'),
+      value_(payload, 'employment.employer_city'),
+      value_(payload, 'employment.employer_state'),
+      value_(payload, 'employment.employer_zip'),
+      value_(payload, 'employment.employer_phone'),
+      value_(payload, 'employment.verification_initials'),
       list_(payload.hair_loss && payload.hair_loss.conditions),
       value_(payload, 'hair_loss.details'),
       value_(payload, 'hair_loss.estimated_start'),
@@ -118,9 +134,10 @@ function ensureHeaders_(sheet) {
   const firstRowValues = sheet.getRange(1, 1, 1, HEADERS.length).getValues()[0];
   const headerMatches = HEADERS.every((header, index) => firstRowValues[index] === header);
   const firstRowIsBlank = firstRowValues.every((value) => value === '');
+  const firstRowLooksLikeHeaders = firstRowValues[0] === 'Submitted At' || firstRowValues[1] === 'Submission ID';
 
   if (!headerMatches) {
-    if (!firstRowIsBlank) {
+    if (!firstRowIsBlank && !firstRowLooksLikeHeaders) {
       sheet.insertRowBefore(1);
     }
     sheet.getRange(1, 1, 1, HEADERS.length).setValues([HEADERS]);

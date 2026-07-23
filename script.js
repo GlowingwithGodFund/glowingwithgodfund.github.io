@@ -111,6 +111,16 @@ function buildPayload(formData, submissionId, uploads) {
       sources: getValues(formData, "referral_source"),
       specific_reference: getValue(formData, "specific_reference"),
     },
+    employment: {
+      occupation: getValue(formData, "occupation"),
+      employer_name: getValue(formData, "employer_name"),
+      employer_address: getValue(formData, "employer_address"),
+      employer_city: getValue(formData, "employer_city"),
+      employer_state: getValue(formData, "employer_state"),
+      employer_zip: getValue(formData, "employer_zip"),
+      employer_phone: getValue(formData, "employer_phone"),
+      verification_initials: getValue(formData, "employment_verification_initials"),
+    },
     hair_loss: {
       conditions: getValues(formData, "condition"),
       details: getValue(formData, "condition_details"),
@@ -162,7 +172,7 @@ if (form && statusMessage) {
 
     if (!s3BaseUrl || !googleSheetsEndpoint) {
       statusMessage.textContent =
-        "Application submission is being configured. Please contact Regina Barbato for help applying.";
+        "Application submission is being configured. Please contact Hair By Gena INC. for help applying.";
       return;
     }
 

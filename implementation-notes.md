@@ -57,7 +57,7 @@ This is not legal advice. Before accepting applications or donations, review:
 - Privacy handling for financial, medical, and photo submissions
 - Media release wording and whether it should be optional or separately signed
 - Enforceability of assumption-of-risk and liability language
-- Conflict-of-interest or related-party disclosures if the nonprofit pays Hair by Gena INC. for services
+- Conflict-of-interest or related-party disclosures if the nonprofit pays Hair By Gena INC. for services
 
 ## Local Preview
 

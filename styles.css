@@ -337,6 +337,50 @@ textarea {
   color: var(--muted);
 }
 
+.honor-section {
+  padding-top: 0;
+}
+
+.honor-card {
+  display: grid;
+  grid-template-columns: minmax(260px, 380px) minmax(0, 1fr);
+  gap: 2rem;
+  align-items: center;
+  padding: 1.4rem;
+  background: rgba(251, 244, 239, 0.07);
+  border: 1px solid var(--dark-line);
+  border-radius: 4px;
+  box-shadow: var(--shadow);
+}
+
+.honor-card figure {
+  margin: 0;
+}
+
+.honor-card img {
+  width: 100%;
+  border: 1px solid var(--line);
+  border-radius: 3px;
+}
+
+.honor-card h2 {
+  margin-top: 0.45rem;
+}
+
+.honor-card blockquote {
+  display: grid;
+  gap: 1rem;
+  margin: 1.2rem 0 0;
+  color: var(--muted);
+}
+
+.honor-card cite {
+  color: var(--rose);
+  font-style: normal;
+  font-weight: 700;
+  line-height: 1.5;
+}
+
 .work-band,
 .donate-band {
   width: 100%;
@@ -717,6 +761,7 @@ details p {
 @media (max-width: 980px) {
   .hero,
   .story-grid,
+  .honor-card,
   .split-section,
   .terms-grid,
   .donate-band,
